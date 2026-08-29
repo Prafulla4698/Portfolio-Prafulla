@@ -1,653 +1,1593 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-  <title>Prafulla Chaudhari · Healthcare Data Analyst</title>
-  <!-- SEO & Open Graph -->
-  <meta name="description" content="Portfolio of Prafulla Chaudhari — Healthcare Data Analyst with 6+ years of Pharma and Genetic Diagnostics experience, specializing in SQL, Python, Power BI, Excel and commercial analytics." />
-  <meta property="og:title" content="Prafulla Chaudhari | Healthcare Data Analyst | Commercial Analytics" />
-  <meta property="og:description" content="Turning real-world sales experience into data-driven business decisions." />
-  <meta property="og:type" content="website" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
-  <!-- Google Font & Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <!-- Three.js (CDN) -->
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.126.0/build/three.module.js"
-      }
-    }
-  </script>
-  <style>
-    /* ----- reset / base ----- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #0b0d10;
-      color: #eef2f6;
-      line-height: 1.5;
-      scroll-behavior: smooth;
-      -webkit-font-smoothing: antialiased;
-    }
-    ::selection { background: #3b82f6; color: #fff; }
-    a { text-decoration: none; color: inherit; }
-    ul { list-style: none; }
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-    /* glassmorphism */
-    .glass {
-      background: rgba(20, 27, 36, 0.65);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      border-radius: 2rem;
-    }
-    .glass-card {
-      background: rgba(16, 22, 30, 0.7);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      border-radius: 1.5rem;
-      transition: all 0.25s ease;
-    }
-    .glass-card:hover {
-      border-color: rgba(59, 130, 246, 0.2);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px -20px rgba(0,0,0,0.8);
-    }
-    /* buttons */
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: #3b82f6;
-      color: #fff;
-      font-weight: 600;
-      padding: 0.75rem 2rem;
-      border-radius: 40px;
-      border: none;
-      transition: 0.2s;
-      cursor: pointer;
-      font-size: 0.95rem;
-      letter-spacing: 0.3px;
-    }
-    .btn-primary:hover { background: #2563eb; transform: scale(1.02); }
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: transparent;
-      color: #eef2f6;
-      font-weight: 600;
-      padding: 0.75rem 2rem;
-      border-radius: 40px;
-      border: 1px solid rgba(255,255,255,0.15);
-      transition: 0.2s;
-      cursor: pointer;
-      font-size: 0.95rem;
-    }
-    .btn-outline:hover { background: rgba(255,255,255,0.04); border-color: #3b82f6; }
-    /* navigation */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      padding: 0.8rem 1.5rem;
-      background: rgba(11, 13, 16, 0.8);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      font-weight: 700;
-      font-size: 1.2rem;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #f0f5ff, #93b4f8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .nav-links {
-      display: flex;
-      gap: 1.8rem;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-    .nav-links a {
-      opacity: 0.7;
-      transition: 0.2s;
-      position: relative;
-    }
-    .nav-links a:hover { opacity: 1; }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0%;
-      height: 2px;
-      background: #3b82f6;
-      transition: 0.25s;
-    }
-    .nav-links a:hover::after { width: 100%; }
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      background: none;
-      border: none;
-    }
-    .hamburger span {
-      width: 26px;
-      height: 2px;
-      background: #eef2f6;
-      border-radius: 4px;
-      transition: 0.25s;
-    }
-    /* mobile nav */
-    @media (max-width: 820px) {
-      .nav-links {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        background: #0b0d10ee;
-        backdrop-filter: blur(20px);
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 2rem;
-        font-size: 1.4rem;
-        transform: translateX(100%);
-        transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        pointer-events: none;
-      }
-      .nav-links.open {
-        transform: translateX(0);
-        pointer-events: all;
-      }
-      .hamburger { display: flex; }
-      .nav-links a::after { display: none; }
-    }
-    /* sections */
-    section {
-      padding: 5rem 0 4rem;
-      scroll-margin-top: 80px;
-    }
-    .section-title {
-      font-size: 2.4rem;
-      font-weight: 700;
-      margin-bottom: 2rem;
-      background: linear-gradient(135deg, #f0f5ff, #a0c0ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -0.02em;
-    }
-    .section-sub {
-      font-size: 1.1rem;
-      color: #9aa9b9;
-      max-width: 700px;
-    }
-    /* hero */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      padding-top: 80px;
-    }
-    #three-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 780px;
-    }
-    .hero-name {
-      font-size: clamp(2.8rem, 10vw, 4.8rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 0.5rem;
-    }
-    .hero-sub {
-      font-size: 1.2rem;
-      color: #b0c4de;
-      font-weight: 400;
-      margin-bottom: 0.75rem;
-    }
-    .hero-tagline {
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: #a0c0ff;
-      margin-bottom: 1rem;
-    }
-    .hero-desc {
-      font-size: 1rem;
-      color: #bfd0e0;
-      max-width: 600px;
-      margin-bottom: 2rem;
-      line-height: 1.7;
-    }
-    .hero-cta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .floating-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem 1.2rem;
-      margin-top: 2.2rem;
-    }
-    .badge {
-      background: rgba(59, 130, 246, 0.08);
-      border: 1px solid rgba(59, 130, 246, 0.15);
-      padding: 0.3rem 1rem;
-      border-radius: 40px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: #cbd9ed;
-      backdrop-filter: blur(4px);
-    }
-    /* contact panel (floating) */
-    .contact-panel {
-      position: fixed;
-      right: 1.5rem;
-      bottom: 2rem;
-      z-index: 999;
-      background: rgba(16, 22, 30, 0.75);
-      backdrop-filter: blur(16px);
-      border-radius: 60px;
-      padding: 0.6rem 1.2rem;
-      border: 1px solid rgba(255,255,255,0.03);
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      box-shadow: 0 12px 40px -12px #00000080;
-    }
-    .contact-panel a {
-      color: #b8ccf0;
-      font-size: 1.1rem;
-      transition: 0.2s;
-    }
-    .contact-panel a:hover { color: #fff; transform: scale(1.1); }
-    .contact-panel span { font-size: 0.8rem; opacity: 0.5; }
-    @media (max-width: 600px) {
-      .contact-panel { right: 1rem; bottom: 1rem; gap: 0.8rem; padding: 0.4rem 0.9rem; flex-wrap: wrap; justify-content: center; }
-      .contact-panel span { display: none; }
-    }
-    /* timeline */
-    .timeline-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-    .timeline-item {
-      background: rgba(20, 28, 40, 0.5);
-      backdrop-filter: blur(4px);
-      border-left: 3px solid #3b82f6;
-      padding: 1.2rem 1.8rem;
-      border-radius: 1rem;
-      transition: 0.2s;
-      cursor: default;
-      border: 1px solid rgba(255,255,255,0.02);
-    }
-    .timeline-item:hover { background: rgba(30, 42, 60, 0.6); border-left-width: 6px; }
-    .timeline-item .date { font-weight: 600; color: #7aa2f7; font-size: 0.9rem; }
-    .timeline-item h3 { font-size: 1.3rem; font-weight: 700; margin: 0.2rem 0; }
-    .timeline-item .company { color: #b0c9f0; font-weight: 500; }
-    .timeline-item .focus {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem 1rem;
-      margin-top: 0.6rem;
-      font-size: 0.85rem;
-      color: #b8cce0;
-    }
-    .timeline-item .highlight {
-      background: #3b82f620;
-      border-radius: 20px;
-      padding: 0.2rem 1rem;
-      display: inline-block;
-      font-weight: 600;
-      color: #8bb2ff;
-    }
-    /* split screen */
-    .split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin: 2rem 0;
-    }
-    .split-card {
-      background: rgba(16,22,30,0.6);
-      border-radius: 1.5rem;
-      padding: 1.8rem;
-      border: 1px solid rgba(255,255,255,0.02);
-    }
-    .split-card h4 { font-size: 1.2rem; margin-bottom: 1rem; color: #b0caf0; }
-    .split-card .tag {
-      display: inline-block;
-      background: rgba(59,130,246,0.08);
-      padding: 0.2rem 1rem;
-      border-radius: 40px;
-      margin: 0.2rem 0.3rem;
-      font-size: 0.8rem;
-      border: 1px solid rgba(255,255,255,0.02);
-    }
-    .center-big {
-      text-align: center;
-      font-size: 1.6rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #93b4f8, #3b82f6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      padding: 1rem 0;
-    }
-    /* advantage cards */
-    .advantage-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-    .advantage-card {
-      background: rgba(16,22,30,0.5);
-      backdrop-filter: blur(4px);
-      border-radius: 1.5rem;
-      padding: 1.8rem 1.2rem;
-      border: 1px solid rgba(255,255,255,0.02);
-      transition: 0.25s;
-    }
-    .advantage-card:hover { transform: translateY(-8px); border-color: #3b82f640; }
-    .advantage-card .num { font-size: 2rem; font-weight: 700; color: #3b82f6; opacity: 0.6; }
-    .advantage-card h5 { font-size: 1.1rem; margin: 0.5rem 0; }
-    /* skills */
-    .skill-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      margin: 1rem 0;
-    }
-    .skill-tag {
-      background: rgba(59,130,246,0.05);
-      border: 1px solid rgba(255,255,255,0.03);
-      padding: 0.5rem 1.5rem;
-      border-radius: 60px;
-      font-weight: 500;
-      transition: 0.2s;
-    }
-    .skill-tag:hover { background: #3b82f620; border-color: #3b82f640; transform: scale(1.02); }
-    /* project */
-    .project-show {
-      background: rgba(16,22,30,0.5);
-      border-radius: 2rem;
-      padding: 2rem;
-      margin: 2rem 0;
-      border: 1px solid rgba(255,255,255,0.02);
-    }
-    .kpi-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin: 1.5rem 0;
-    }
-    .kpi-card {
-      background: rgba(0,0,0,0.2);
-      border-radius: 1rem;
-      padding: 0.8rem 1.8rem;
-      min-width: 120px;
-      border-left: 2px solid #3b82f6;
-    }
-    .kpi-card small { opacity: 0.6; font-size: 0.7rem; display: block; }
-    .kpi-card strong { font-size: 1.3rem; }
-    .chart-placeholder {
-      background: rgba(0,0,0,0.25);
-      border-radius: 1.2rem;
-      padding: 1.5rem;
-      text-align: center;
-      border: 1px dashed #3b82f640;
-      color: #8899bb;
-    }
-    /* education & certs */
-    .edu-card {
-      background: rgba(16,22,30,0.5);
-      border-radius: 1.5rem;
-      padding: 1.8rem;
-      border: 1px solid rgba(255,255,255,0.02);
-      max-width: 500px;
-    }
-    .cert-wall {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      margin: 1.5rem 0;
-    }
-    .cert-item {
-      background: rgba(20,30,44,0.5);
-      backdrop-filter: blur(4px);
-      padding: 0.5rem 1.5rem;
-      border-radius: 40px;
-      border: 1px solid rgba(255,255,255,0.02);
-    }
-    /* recruiter */
-    .recruiter-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-    .recruiter-card {
-      background: rgba(16,22,30,0.4);
-      padding: 1.5rem 1rem;
-      text-align: center;
-      border-radius: 1.5rem;
-      font-weight: 600;
-      border: 1px solid rgba(255,255,255,0.02);
-    }
-    /* footer */
-    footer {
-      border-top: 1px solid rgba(255,255,255,0.03);
-      padding: 2.5rem 0;
-      text-align: center;
-      color: #7f8fa0;
-      font-size: 0.9rem;
-    }
-    /* responsive */
-    @media (max-width: 700px) {
-      .split { grid-template-columns: 1fr; }
-      .hero-name { font-size: 2.8rem; }
-      .section-title { font-size: 2rem; }
-      .container { padding: 0 1rem; }
-    }
-    /* reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-    }
-    /* misc */
-    .text-glow { text-shadow: 0 0 30px #3b82f630; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prafulla Chaudhari | Healthcare Data Analyst | Commercial Analytics</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Portfolio of Prafulla Chaudhari — Healthcare Data Analyst with 6+ years of Pharma and Genetic Diagnostics experience, specializing in SQL, Python, Power BI, Excel and commercial analytics.">
+    <meta name="author" content="Prafulla Chaudhari">
+    <meta name="keywords" content="Healthcare Data Analyst, Commercial Analytics, Pharma Sales Analytics, Power BI, Python, SQL, Diagnostic Analytics, Business Analytics, Prafulla Chaudhari">
+    
+    <!-- Open Graph Metadata -->
+    <meta property="og:title" content="Prafulla Chaudhari | Healthcare Data Analyst & Commercial Analytics">
+    <meta property="og:description" content="Turning 6+ years of real-world healthcare and pharma sales experience into data-driven commercial insights.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://prafullachaudhari.github.io/portfolio/">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0B0F19',
+                            card: '#111827',
+                            border: '#1F2937',
+                            cyan: '#06B6D4',
+                            emerald: '#10B981',
+                            blue: '#3B82F6',
+                            purple: '#8B5CF6'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 3s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        glow: {
+                            '0%': { opacity: '0.4', filter: 'blur(20px)' },
+                            '100%': { opacity: '0.8', filter: 'blur(30px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- External Libraries (CDNs) -->
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Three.js (3D Graphics) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- GSAP & ScrollTrigger (Smooth Animations) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Chart.js (Data Visualization) -->
+    <script src="https://cdn.jsdelivr.com/npm/chart.js"></script>
+    
+    <!-- Vanilla Tilt.js (3D Card Hover Effects) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+    <style>
+        /* Custom Customizations & Glassmorphism Effects */
+        body {
+            background-color: #080C14;
+            color: #F3F4F6;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-panel-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .glass-panel-hover:hover {
+            background: rgba(31, 41, 55, 0.8);
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .glass-input {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+        }
+
+        .glass-input:focus {
+            border-color: #06B6D4;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+            outline: none;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #38BDF8 0%, #34D399 50%, #A78BFA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-text-cyan {
+            background: linear-gradient(135deg, #22D3EE 0%, #10B981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080C14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1F2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06B6D4;
+        }
+
+        /* Flowline pulse effect */
+        .flow-line {
+            background: linear-gradient(90deg, #06B6D4, #10B981, #3B82F6, #8B5CF6);
+            background-size: 200% 200%;
+            animation: flowGlow 3s ease infinite;
+        }
+
+        @keyframes flowGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Chart Canvas wrapper */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 260px;
+        }
+    </style>
 </head>
-<body>
-  <!-- NAVIGATION -->
-  <nav>
-    <div class="nav-logo">Prafulla Chaudhari</div>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#hero">Home</a></li>
-      <li><a href="#journey">Journey</a></li>
-      <li><a href="#whyanalytics">Why Analytics</a></li>
-      <li><a href="#advantage">Advantage</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
+<body class="font-sans antialiased text-slate-200 bg-[#080C14]">
 
-  <!-- FLOATING CONTACT PANEL -->
-  <div class="contact-panel">
-    <a href="mailto:smilingprafulla@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-    <a href="tel:7304475787" aria-label="Phone"><i class="fas fa-phone"></i></a>
-    <a href="https://linkedin.com/in/prafulla-chaudhari-424240183" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-    <span>Pune, MH</span>
-  </div>
+    <!-- Floating Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-50 px-4 py-3 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto flex items-center justify-between glass-panel rounded-2xl px-6 py-3 border border-white/10 shadow-2xl">
+            <!-- Brand Logo -->
+            <a href="#home" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-emerald-400 flex items-center justify-center text-slate-950 font-bold text-xl shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+                    PC
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-lg tracking-tight text-white group-hover:text-cyan-400 transition-colors">Prafulla Chaudhari</span>
+                    <span class="text-xs text-slate-400 font-mono">Healthcare Data Analyst</span>
+                </div>
+            </a>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div id="three-container"></div>
-    <div class="container hero-content">
-      <h1 class="hero-name">PRAFULLA CHAUDHARI</h1>
-      <div class="hero-sub">Healthcare Data Analyst | Commercial Analytics | Pharma & Diagnostics</div>
-      <div class="hero-tagline">“Turning real-world sales experience into data-driven business decisions.”</div>
-      <p class="hero-desc">Healthcare Sales &amp; Analytics professional with 6+ years of experience across Pharma and Genetic Diagnostics, now transitioning into Data Analytics with hands-on expertise in SQL, Python, Power BI, Excel and Tableau.</p>
-      <div class="hero-cta">
-        <a href="#journey" class="btn-primary"><i class="fas fa-arrow-right"></i> Explore My Journey</a>
-        <a href="#projects" class="btn-outline"><i class="fas fa-code"></i> View My Projects</a>
-      </div>
-      <div class="floating-badges">
-        <span class="badge">6+ Years Experience</span>
-        <span class="badge">Healthcare + Analytics</span>
-        <span class="badge">SQL</span>
-        <span class="badge">Python</span>
-        <span class="badge">Power BI</span>
-        <span class="badge">Excel</span>
-      </div>
-    </div>
-  </section>
+            <!-- Desktop Menu -->
+            <nav class="hidden lg:flex items-center gap-1 font-medium text-sm text-slate-300">
+                <a href="#home" class="px-3 py-2 rounded-lg hover:text-cyan-400 hover:bg-white/5 transition-all">Home</a>
+                <a href="#journey" class="px-3 py-2 rounded-lg hover:text-cyan-400 hover:bg-white/5 transition-all">Journey</a>
+                <a href="#why-analytics" class="px-3 py-2 rounded-lg hover:text-cyan-400 hover:bg-white/5 transition-all">Why Analytics</a>
+                <a href="#advantage" class="px-3 py-2 rounded-lg hover:text-cyan-400 hover:bg-white/5 transition-all">Advantage</a>
+                <a href="#skills" class="px-3 py-2 rounded-lg hover:text-cyan-400 hover:bg-white/5 transition-all">Skills</a>
+                <a href="#projects" class="px-3 py-2 rounded-lg hover:text-cyan-400 hover:bg-white/5 transition-all">Projects</a>
+                <a href="#education" class="px-3 py-2 rounded-lg hover:text-cyan-400 hover:bg-white/5 transition-all">Education</a>
+                <a href="#contact" class="px-3 py-2 rounded-lg hover:text-cyan-400 hover:bg-white/5 transition-all">Contact</a>
+            </nav>
 
-  <!-- JOURNEY -->
-  <section id="journey">
-    <div class="container">
-      <h2 class="section-title">My Journey: Sales → Analytics</h2>
-      <div class="timeline-grid">
-        <div class="timeline-item"><div class="date">Jan 2020 – May 2021</div><h3>Sales Executive</h3><div class="company">KLM Laboratories Pvt. Ltd. · Nashik</div><div class="focus"><span>Territory sales</span><span>CRM</span><span>Reporting</span><span>Business analysis</span></div></div>
-        <div class="timeline-item"><div class="date">May 2021 – Sep 2021</div><h3>Executive – Sales &amp; Marketing</h3><div class="company">Sahyadri Specialty Labs · Pune</div><div class="focus"><span>Diagnostic business development</span><span>Clinician engagement</span><span>Client databases</span></div></div>
-        <div class="timeline-item"><div class="date">Nov 2021 – Oct 2024</div><h3>Business Development Manager</h3><div class="company">LifeCell International Pvt. Ltd. · Pune</div><div class="focus"><span>Prenatal genetics</span><span>Rare disease diagnostics</span><span>CRM · Pipeline</span><span>Revenue forecasting</span></div><div class="highlight">100+ Clinicians</div></div>
-        <div class="timeline-item" style="border-left-color:#7aa2f7;"><div class="date">Nov 2024 – Present</div><h3>Area Sales Manager – Genetics</h3><div class="company">Strand Life Sciences · Pune &amp; Western Maharashtra</div><div class="focus"><span>Territory management</span><span>Sales data analysis</span><span>Product performance</span><span>KPI dashboards · Python</span><span>Strategic reporting</span></div><div class="highlight">Built Territory From Scratch</div></div>
-      </div>
-    </div>
-  </section>
+            <!-- Action Button -->
+            <div class="hidden lg:flex items-center gap-3">
+                <a href="#contact" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-cyan-400 to-emerald-400 rounded-xl shadow-lg shadow-cyan-500/20 hover:opacity-90 hover:shadow-cyan-500/40 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i> Get In Touch
+                </a>
+            </div>
 
-  <!-- WHY ANALYTICS -->
-  <section id="whyanalytics">
-    <div class="container">
-      <h2 class="section-title">Why Move From Sales Into Analytics?</h2>
-      <div class="split">
-        <div class="split-card"><h4><i class="fas fa-handshake" style="color:#3b82f6;"></i> Sales Experience</h4><span class="tag">Customers</span><span class="tag">Territory</span><span class="tag">Targets</span><span class="tag">Products</span><span class="tag">Revenue</span><span class="tag">CRM</span><span class="tag">Market</span><span class="tag">Competition</span><span class="tag">Business Problems</span></div>
-        <div class="split-card"><h4><i class="fas fa-chart-pie" style="color:#3b82f6;"></i> Analytics</h4><span class="tag">SQL</span><span class="tag">Python</span><span class="tag">Power BI</span><span class="tag">Excel</span><span class="tag">Tableau</span><span class="tag">Data Visualization</span><span class="tag">KPI Analysis</span><span class="tag">Trend Analysis</span><span class="tag">Business Insights</span></div>
-      </div>
-      <div class="center-big">REAL BUSINESS EXPERIENCE + DATA ANALYTICS <span style="font-weight:300;margin:0 0.5rem;">=</span> BUSINESS-READY ANALYTICS</div>
-    </div>
-  </section>
-
-  <!-- ADVANTAGE -->
-  <section id="advantage">
-    <div class="container">
-      <h2 class="section-title">My Competitive Advantage</h2>
-      <p style="font-size:1.2rem;font-weight:600;color:#b0caf0;">“I don't just analyze data. I've worked with the business behind the data.”</p>
-      <p style="color:#a0b8d0;max-width:700px;">Coming from real-world Pharma and Genetic Diagnostics sales gives me a practical understanding of how commercial teams work, how KPIs are used, where business problems originate, and what kind of insights can actually support decision-making.</p>
-      <div class="advantage-grid">
-        <div class="advantage-card"><span class="num">01</span><h5>Real Business Context</h5><p style="font-size:0.9rem;color:#b0c8e0;">I understand the business questions behind sales data.</p></div>
-        <div class="advantage-card"><span class="num">02</span><h5>KPI Understanding</h5><p style="font-size:0.9rem;color:#b0c8e0;">Experience with territory performance, sales trends, customer engagement.</p></div>
-        <div class="advantage-card"><span class="num">03</span><h5>Problem → Insight → Solution</h5><p style="font-size:0.9rem;color:#b0c8e0;">Ability to connect analytical findings with practical business problems.</p></div>
-        <div class="advantage-card"><span class="num">04</span><h5>Healthcare Domain Expertise</h5><p style="font-size:0.9rem;color:#b0c8e0;">Hands-on exposure to Pharma, Diagnostics, Genetic Testing and healthcare stakeholders.</p></div>
-      </div>
-      <div style="display:flex;flex-wrap:wrap;gap:0.8rem;justify-content:center;margin:1rem 0;"><span class="skill-tag">Business Problem</span><span style="color:#3b82f6;">→</span><span class="skill-tag">Data</span><span style="color:#3b82f6;">→</span><span class="skill-tag">Analysis</span><span style="color:#3b82f6;">→</span><span class="skill-tag">Insight</span><span style="color:#3b82f6;">→</span><span class="skill-tag">Action</span></div>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills">
-    <div class="container">
-      <h2 class="section-title">Core Competencies</h2>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
-        <div><h4 style="color:#b0caf0;">ANALYTICS &amp; TECHNICAL</h4><div class="skill-group"><span class="skill-tag">SQL</span><span class="skill-tag">Python</span><span class="skill-tag">Power BI</span><span class="skill-tag">MS Excel</span><span class="skill-tag">Tableau</span><span class="skill-tag">Pandas</span><span class="skill-tag">Matplotlib</span><span class="skill-tag">Seaborn</span></div></div>
-        <div><h4 style="color:#b0caf0;">DOMAIN &amp; BUSINESS</h4><div class="skill-group"><span class="skill-tag">Pharma Sales Analytics</span><span class="skill-tag">Diagnostics Data</span><span class="skill-tag">CRM</span><span class="skill-tag">Reporting</span><span class="skill-tag">Territory Analysis</span><span class="skill-tag">Market Research</span></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects">
-    <div class="container">
-      <h2 class="section-title">Analytics Projects</h2>
-      <div class="project-show">
-        <h3 style="font-size:1.6rem;font-weight:700;">Diagnostic Sales Data Analysis</h3>
-        <p style="color:#b0c8e0;">May 2026 · <span class="badge" style="background:#1e2a3a;">Python · Pandas · Matplotlib · Seaborn</span></p>
-        <p style="margin:1rem 0;">“Analyzed two years of regional diagnostics sales data using Python, Pandas, Matplotlib and Seaborn.”</p>
-        <div class="kpi-row">
-          <div class="kpi-card"><small>Sales Performance</small><strong>📈 +12%</strong><small>demo</small></div>
-          <div class="kpi-card"><small>Product Performance</small><strong>🏆 Genetic</strong><small>demo</small></div>
-          <div class="kpi-card"><small>Regional Performance</small><strong>🌍 West</strong><small>demo</small></div>
-          <div class="kpi-card"><small>Clinician Insights</small><strong>👩‍⚕️ 86</strong><small>demo</small></div>
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" class="lg:hidden text-slate-300 hover:text-white p-2 rounded-lg focus:outline-none" aria-label="Toggle Navigation">
+                <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+            </button>
         </div>
-        <div class="chart-placeholder"><i class="fas fa-chart-bar" style="margin-right:0.5rem;"></i> Interactive Demo Visualization · Monthly Sales Trend · Product · Region</div>
-        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;">
-          <button class="btn-primary" style="padding:0.5rem 1.5rem;" disabled><i class="fas fa-eye"></i> View Project</button>
-          <button class="btn-outline" style="padding:0.5rem 1.5rem;" disabled><i class="fas fa-chart-line"></i> View Analysis</button>
-          <button class="btn-outline" style="padding:0.5rem 1.5rem;" disabled><i class="fab fa-github"></i> GitHub</button>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden lg:hidden max-w-7xl mx-auto mt-2 glass-panel rounded-2xl p-6 border border-white/10 flex-col gap-4 shadow-2xl transition-all">
+            <a href="#home" class="mobile-link text-slate-200 hover:text-cyan-400 py-2 border-b border-slate-800">Home</a>
+            <a href="#journey" class="mobile-link text-slate-200 hover:text-cyan-400 py-2 border-b border-slate-800">Journey</a>
+            <a href="#why-analytics" class="mobile-link text-slate-200 hover:text-cyan-400 py-2 border-b border-slate-800">Why Analytics</a>
+            <a href="#advantage" class="mobile-link text-slate-200 hover:text-cyan-400 py-2 border-b border-slate-800">Advantage</a>
+            <a href="#skills" class="mobile-link text-slate-200 hover:text-cyan-400 py-2 border-b border-slate-800">Skills</a>
+            <a href="#projects" class="mobile-link text-slate-200 hover:text-cyan-400 py-2 border-b border-slate-800">Projects</a>
+            <a href="#education" class="mobile-link text-slate-200 hover:text-cyan-400 py-2 border-b border-slate-800">Education</a>
+            <a href="#contact" class="mobile-link text-slate-200 hover:text-cyan-400 py-2">Contact</a>
+            <a href="#contact" class="mobile-link mt-2 text-center py-3 text-xs font-semibold uppercase tracking-wider text-slate-950 bg-gradient-to-r from-cyan-400 to-emerald-400 rounded-xl">
+                Get In Touch
+            </a>
         </div>
-        <p style="font-size:0.7rem;opacity:0.4;margin-top:1rem;">Demo visualizations · sample data</p>
-      </div>
-    </div>
-  </section>
+    </header>
 
-  <!-- EDUCATION -->
-  <section id="education">
-    <div class="container">
-      <h2 class="section-title">Education</h2>
-      <div class="edu-card">
-        <h3 style="font-size:1.5rem;">Bachelor of Pharmacy (B.Pharm)</h3>
-        <p style="color:#b0c8e0;">KBC North Maharashtra University, Jalgaon · 2019</p>
-      </div>
-      <h3 style="margin-top:2rem;font-size:1.4rem;">Certifications &amp; Training</h3>
-      <div class="cert-wall">
-        <span class="cert-item">Master's in Data Analytics · TopMentor</span>
-        <span class="cert-item">Master's in Business Analytics · TopMentor</span>
-        <span class="cert-item">Digital Health Specialization · Imperial College London | Coursera</span>
-        <span class="cert-item">Python &amp; SQL Fundamentals · TopMentor</span>
-        <span class="cert-item">AI in Pharma: Transforming Life Sciences · LSSSDC</span>
-      </div>
-    </div>
-  </section>
+    <!-- Floating Quick Contact Side Bar (Desktop) -->
+    <aside class="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-4">
+        <div class="glass-panel p-2.5 rounded-2xl border border-white/10 flex flex-col gap-3 shadow-2xl backdrop-blur-md">
+            <a href="mailto:smilingprafulla@gmail.com" title="Email Prafulla" class="w-10 h-10 rounded-xl bg-slate-800/80 hover:bg-cyan-500 hover:text-slate-950 flex items-center justify-center text-slate-300 transition-all group relative">
+                <i class="fa-solid fa-envelope"></i>
+                <span class="absolute left-14 bg-slate-900 text-xs px-3 py-1.5 rounded-lg text-slate-200 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-slate-700 pointer-events-none font-mono">smilingprafulla@gmail.com</span>
+            </a>
+            <a href="tel:7304475787" title="Call Prafulla" class="w-10 h-10 rounded-xl bg-slate-800/80 hover:bg-emerald-500 hover:text-slate-950 flex items-center justify-center text-slate-300 transition-all group relative">
+                <i class="fa-solid fa-phone"></i>
+                <span class="absolute left-14 bg-slate-900 text-xs px-3 py-1.5 rounded-lg text-slate-200 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-slate-700 pointer-events-none font-mono">+91 7304475787</span>
+            </a>
+            <a href="https://linkedin.com/in/prafulla-chaudhari-424240183" target="_blank" rel="noopener noreferrer" title="LinkedIn Profile" class="w-10 h-10 rounded-xl bg-slate-800/80 hover:bg-blue-500 hover:text-slate-950 flex items-center justify-center text-slate-300 transition-all group relative">
+                <i class="fa-brands fa-linkedin-in"></i>
+                <span class="absolute left-14 bg-slate-900 text-xs px-3 py-1.5 rounded-lg text-slate-200 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-slate-700 pointer-events-none font-mono">LinkedIn Profile</span>
+            </a>
+            <div title="Location: Pune, Maharashtra" class="w-10 h-10 rounded-xl bg-slate-800/80 flex items-center justify-center text-slate-300 group relative">
+                <i class="fa-solid fa-location-dot text-cyan-400"></i>
+                <span class="absolute left-14 bg-slate-900 text-xs px-3 py-1.5 rounded-lg text-slate-200 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-slate-700 pointer-events-none font-mono">Pune, Maharashtra</span>
+            </div>
+        </div>
+    </aside>
 
-  <!-- RECRUITER + AVAILABILITY -->
-  <section id="recruiter">
-    <div class="container">
-      <h2 class="section-title">Open to New Opportunities</h2>
-      <div style="display:flex;flex-wrap:wrap;gap:1.5rem;">
-        <div class="glass-card" style="padding:1.2rem 2rem;flex:1;min-width:160px;"><i class="fas fa-map-pin" style="color:#3b82f6;"></i> <strong>📍 READY TO RELOCATE</strong> <span style="display:block;">Yes</span></div>
-        <div class="glass-card" style="padding:1.2rem 2rem;flex:1;min-width:160px;"><i class="fas fa-clock" style="color:#3b82f6;"></i> <strong>⏱ AVAILABLE TO JOIN</strong> <span style="display:block;">Within 30 Days</span></div>
-      </div>
-      <p style="
+    <!-- MAIN CONTENT WRAPPER -->
+    <main>
+        <!-- SECTION 1: HERO / INTRODUCTION -->
+        <section id="home" class="relative min-h-screen pt-32 pb-20 flex items-center justify-center overflow-hidden">
+            <!-- 3D Three.js Canvas Container -->
+            <div id="three-canvas-container" class="absolute inset-0 z-0 opacity-80 pointer-events-none"></div>
+
+            <!-- Ambient Radial Glows -->
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+                <div class="grid lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Left Hero Content -->
+                    <div class="lg:col-span-7 space-y-8">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel border border-cyan-500/30 text-cyan-400 text-xs font-mono tracking-wide">
+                            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                            <span>COMMERCIAL ANALYTICS & HEALTHCARE</span>
+                        </div>
+
+                        <div class="space-y-4">
+                            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-none">
+                                PRAFULLA <br>
+                                <span class="gradient-text">CHAUDHARI</span>
+                            </h1>
+                            <p class="text-lg sm:text-xl font-semibold text-slate-300">
+                                Healthcare Data Analyst | Commercial Analytics | Pharma & Diagnostics
+                            </p>
+                        </div>
+
+                        <div class="p-4 rounded-2xl glass-panel border-l-4 border-l-cyan-400 bg-slate-900/40">
+                            <p class="text-cyan-300 font-medium italic text-base sm:text-lg">
+                                "Turning real-world sales experience into data-driven business decisions."
+                            </p>
+                        </div>
+
+                        <p class="text-slate-400 text-base sm:text-lg leading-relaxed max-w-2xl">
+                            Healthcare Sales & Analytics professional with <strong class="text-white">6+ years of experience</strong> across Pharma and Genetic Diagnostics, now transitioning into Data Analytics with hands-on expertise in <span class="text-cyan-400 font-mono">SQL</span>, <span class="text-cyan-400 font-mono">Python</span>, <span class="text-cyan-400 font-mono">Power BI</span>, <span class="text-cyan-400 font-mono">Excel</span>, and <span class="text-cyan-400 font-mono">Tableau</span>.
+                        </p>
+
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-wrap items-center gap-4 pt-2">
+                            <a href="#journey" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-400 text-slate-950 font-bold text-sm tracking-wide hover:shadow-lg hover:shadow-cyan-500/25 transition-all flex items-center gap-2 group">
+                                Explore My Journey
+                                <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                            <a href="#projects" class="px-6 py-3.5 rounded-xl glass-panel border border-slate-700 hover:border-cyan-500/50 text-white font-semibold text-sm tracking-wide transition-all flex items-center gap-2">
+                                View My Projects
+                                <i class="fa-solid fa-chart-line text-cyan-400"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Hero Interactive Cards & KPI Floating Grid -->
+                    <div class="lg:col-span-5 relative flex justify-center">
+                        <div class="grid grid-cols-2 gap-4 w-full max-w-md">
+                            
+                            <!-- KPI Card 1 -->
+                            <div class="glass-panel p-5 rounded-2xl border border-white/10 animate-float hover:border-cyan-500/40 transition-all shadow-xl" style="animation-delay: 0s;">
+                                <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-3 text-lg font-mono">
+                                    <i class="fa-solid fa-briefcase"></i>
+                                </div>
+                                <div class="text-2xl font-bold text-white font-mono">6+ Years</div>
+                                <div class="text-xs text-slate-400 mt-1">Pharma & Diagnostics Exp.</div>
+                            </div>
+
+                            <!-- KPI Card 2 -->
+                            <div class="glass-panel p-5 rounded-2xl border border-white/10 animate-float hover:border-emerald-500/40 transition-all shadow-xl" style="animation-delay: 1s;">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-3 text-lg">
+                                    <i class="fa-solid fa-[#10B981] fa-user-doctor"></i>
+                                </div>
+                                <div class="text-2xl font-bold text-white font-mono">100+</div>
+                                <div class="text-xs text-slate-400 mt-1">Clinicians Managed</div>
+                            </div>
+
+                            <!-- KPI Card 3 -->
+                            <div class="glass-panel p-5 rounded-2xl border border-white/10 animate-float hover:border-blue-500/40 transition-all shadow-xl" style="animation-delay: 2s;">
+                                <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-3 text-lg">
+                                    <i class="fa-solid fa-database"></i>
+                                </div>
+                                <div class="text-xl font-bold text-white font-mono">SQL & Python</div>
+                                <div class="text-xs text-slate-400 mt-1">Data Processing</div>
+                            </div>
+
+                            <!-- KPI Card 4 -->
+                            <div class="glass-panel p-5 rounded-2xl border border-white/10 animate-float hover:border-purple-500/40 transition-all shadow-xl" style="animation-delay: 3s;">
+                                <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-3 text-lg">
+                                    <i class="fa-solid fa-chart-column"></i>
+                                </div>
+                                <div class="text-xl font-bold text-white font-mono">Power BI</div>
+                                <div class="text-xs text-slate-400 mt-1">KPI Dashboards</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: JOURNEY - SALES TO ANALYTICS -->
+        <section id="journey" class="py-24 relative bg-slate-950/60 border-t border-b border-slate-800/80">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <h2 class="text-xs font-mono uppercase tracking-widest text-cyan-400">Career Progression</h2>
+                    <h3 class="text-3xl sm:text-5xl font-extrabold text-white">My Journey: Sales → Analytics</h3>
+                    <p class="text-slate-400 text-base">From healthcare field execution and territory building to commercial analytics dashboarding.</p>
+                </div>
+
+                <!-- Timeline Container -->
+                <div class="relative wrap overflow-hidden p-2 sm:p-10">
+                    <!-- Vertical Timeline Line -->
+                    <div class="border-2-2 absolute border-opacity-20 border-cyan-500 h-full border left-1/2 -ml-0.5 hidden md:block"></div>
+
+                    <div class="space-y-12">
+                        
+                        <!-- Milestone 1: Strand Life Sciences (Present) -->
+                        <div class="relative flex flex-col md:flex-row items-center justify-between w-full group">
+                            <div class="order-1 md:w-5/12 w-full"></div>
+                            <div class="z-20 flex items-center order-1 bg-cyan-500 shadow-xl w-10 h-10 rounded-full justify-center text-slate-950 font-bold my-4 md:my-0 ring-8 ring-cyan-500/20">
+                                <i class="fa-solid fa-dna text-sm"></i>
+                            </div>
+                            <div class="order-1 md:w-5/12 w-full glass-panel p-6 rounded-2xl border border-cyan-500/40 shadow-2xl transition-all group-hover:border-cyan-400">
+                                <div class="flex items-center justify-between gap-2 mb-2">
+                                    <span class="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-mono font-semibold">Nov 2024 – Present</span>
+                                    <span class="text-xs text-slate-400"><i class="fa-solid fa-location-dot text-cyan-400 mr-1"></i> Pune & W. MH</span>
+                                </div>
+                                <h4 class="text-xl font-bold text-white">Area Sales Manager – Genetics</h4>
+                                <h5 class="text-sm font-semibold text-cyan-300 mb-3">Strand Life Sciences</h5>
+                                <div class="inline-block px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 text-xs font-mono font-bold mb-3">
+                                    ✨ Key Highlight: Built Territory From Scratch
+                                </div>
+                                <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                                    Analyzed two years of sales data and built monthly KPI dashboards covering sales trends, territory coverage, and customer engagement.
+                                </p>
+                                <div class="flex flex-wrap gap-1.5 font-mono text-xs text-slate-300">
+                                    <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Sales Data Analysis</span>
+                                    <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">KPI Dashboards</span>
+                                    <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Excel</span>
+                                    <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Python</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Milestone 2: LifeCell International -->
+                        <div class="relative flex flex-col md:flex-row-reverse items-center justify-between w-full group">
+                            <div class="order-1 md:w-5/12 w-full"></div>
+                            <div class="z-20 flex items-center order-1 bg-emerald-500 shadow-xl w-10 h-10 rounded-full justify-center text-slate-950 font-bold my-4 md:my-0 ring-8 ring-emerald-500/20">
+                                <i class="fa-solid fa-stethoscope text-sm"></i>
+                            </div>
+                            <div class="order-1 md:w-5/12 w-full glass-panel p-6 rounded-2xl border border-white/10 shadow-2xl transition-all group-hover:border-emerald-400">
+                                <div class="flex items-center justify-between gap-2 mb-2">
+                                    <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-mono">Nov 2021 – Oct 2024</span>
+                                    <span class="text-xs text-slate-400"><i class="fa-solid fa-location-dot text-emerald-400 mr-1"></i> Pune</span>
+                                </div>
+                                <h4 class="text-xl font-bold text-white">Business Development Manager</h4>
+                                <h5 class="text-sm font-semibold text-emerald-300 mb-3">LifeCell International Pvt. Ltd.</h5>
+                                <div class="inline-block px-2.5 py-1 rounded bg-blue-500/20 text-blue-400 text-xs font-mono font-bold mb-3">
+                                    🎯 Highlight: 100+ Clinicians Managed
+                                </div>
+                                <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                                    Focused on prenatal genetics, rare disease diagnostics, territory business trends, CRM pipeline monitoring, and revenue forecasting across healthcare stakeholders.
+                                </p>
+                                <div class="flex flex-wrap gap-1.5 font-mono text-xs text-slate-300">
+                                    <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Prenatal Genetics</span>
+                                    <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Pipeline Analytics</span>
+                                    <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Revenue Forecasting</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Milestone 3: Sahyadri Specialty Labs -->
+                        <div class="relative flex flex-col md:flex-row items-center justify-between w-full group">
+                            <div class="order-1 md:w-5/12 w-full"></div>
+                            <div class="z-20 flex items-center order-1 bg-blue-500 shadow-xl w-10 h-10 rounded-full justify-center text-slate-950 font-bold my-4 md:my-0 ring-8 ring-blue-500/20">
+                                <i class="fa-solid fa-flask text-sm"></i>
+                            </div>
+                            <div class="order-1 md:w-5/12 w-full glass-panel p-6 rounded-2xl border border-white/10 shadow-2xl transition-all group-hover:border-blue-400">
+                                <div class="flex items-center justify-between gap-2 mb-2">
+                                    <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-mono">May 2021 – Sept 2021</span>
+                                    <span class="text-xs text-slate-400"><i class="fa-solid fa-location-dot text-blue-400 mr-1"></i> Pune</span>
+                                </div>
+                                <h4 class="text-xl font-bold text-white">Executive – Sales & Marketing</h4>
+                                <h5 class="text-sm font-semibold text-blue-300 mb-3">Sahyadri Specialty Labs</h5>
+                                <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                                    Diagnostic business development, clinician engagement, client databases management, and laboratory business metrics tracking.
+                                </p>
+                                <div class="flex flex-wrap gap-1.5 font-mono text-xs text-slate-300">
+                                    <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Diagnostics</span>
+                                    <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Client Databases</span>
+                                    <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Lab Metrics</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Milestone 4: KLM Laboratories -->
+                        <div class="relative flex flex-col md:flex-row-reverse items-center justify-between w-full group">
+                            <div class="order-1 md:w-5/12 w-full"></div>
+                            <div class="z-20 flex items-center order-1 bg-purple-500 shadow-xl w-10 h-10 rounded-full justify-center text-slate-950 font-bold my-4 md:my-0 ring-8 ring-purple-500/20">
+                                <i class="fa-solid fa-capsules text-sm"></i>
+                            </div>
+                            <div class="order-1 md:w-5/12 w-full glass-panel p-6 rounded-2xl border border-white/10 shadow-2xl transition-all group-hover:border-purple-400">
+                                <div class="flex items-center justify-between gap-2 mb-2">
+                                    <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-mono">Jan 2020 – May 2021</span>
+                                    <span class="text-xs text-slate-400"><i class="fa-solid fa-location-dot text-purple-400 mr-1"></i> Nashik</span>
+                                </div>
+                                <h4 class="text-xl font-bold text-white">Sales Executive</h4>
+                                <h5 class="text-sm font-semibold text-purple-300 mb-3">KLM Laboratories Pvt. Ltd.</h5>
+                                <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                                    Territory sales execution, customer relationship management, sales tracking, reporting, and regional business analysis.
+                                </p>
+                                <div class="flex flex-wrap gap-1.5 font-mono text-xs text-slate-300">
+                                    <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Pharma Sales</span>
+                                    <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Territory Mgmt</span>
+                                    <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Reporting</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: "WHY SALES → ANALYTICS?" -->
+        <section id="why-analytics" class="py-24 relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <h2 class="text-xs font-mono uppercase tracking-widest text-emerald-400">Strategic Alignment</h2>
+                    <h3 class="text-3xl sm:text-5xl font-extrabold text-white">Why Move From Sales Into Analytics?</h3>
+                    <p class="text-slate-400 text-base">Bridging ground-level commercial context with modern technical analytics tools.</p>
+                </div>
+
+                <!-- Split Screen Interactive Visual -->
+                <div class="grid lg:grid-cols-11 gap-6 items-center">
+                    
+                    <!-- Left: Sales Experience -->
+                    <div class="lg:col-span-5 glass-panel p-8 rounded-3xl border border-white/10 space-y-6 hover:border-cyan-500/30 transition-all">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white">Sales Experience</h4>
+                                <p class="text-xs text-slate-400">Real-World Healthcare Operations</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-3 pt-2">
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-semibold text-slate-300 hover:text-cyan-400 hover:border-cyan-500/50 transition-all">
+                                <i class="fa-solid fa-users text-cyan-400 block mb-1 text-sm"></i> Customers
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-semibold text-slate-300 hover:text-cyan-400 hover:border-cyan-500/50 transition-all">
+                                <i class="fa-solid fa-map-location-dot text-cyan-400 block mb-1 text-sm"></i> Territory
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-semibold text-slate-300 hover:text-cyan-400 hover:border-cyan-500/50 transition-all">
+                                <i class="fa-solid fa-bullseye text-cyan-400 block mb-1 text-sm"></i> Targets
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-semibold text-slate-300 hover:text-cyan-400 hover:border-cyan-500/50 transition-all">
+                                <i class="fa-solid fa-vial text-cyan-400 block mb-1 text-sm"></i> Products
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-semibold text-slate-300 hover:text-cyan-400 hover:border-cyan-500/50 transition-all">
+                                <i class="fa-solid fa-indian-rupee-sign text-cyan-400 block mb-1 text-sm"></i> Revenue
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-semibold text-slate-300 hover:text-cyan-400 hover:border-cyan-500/50 transition-all">
+                                <i class="fa-solid fa-address-card text-cyan-400 block mb-1 text-sm"></i> CRM
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-semibold text-slate-300 hover:text-cyan-400 hover:border-cyan-500/50 transition-all">
+                                <i class="fa-solid fa-store text-cyan-400 block mb-1 text-sm"></i> Market
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-semibold text-slate-300 hover:text-cyan-400 hover:border-cyan-500/50 transition-all">
+                                <i class="fa-solid fa-chess-knight text-cyan-400 block mb-1 text-sm"></i> Competition
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-semibold text-slate-300 hover:text-cyan-400 hover:border-cyan-500/50 transition-all">
+                                <i class="fa-solid fa-triangle-exclamation text-cyan-400 block mb-1 text-sm"></i> Problems
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Center Operator -->
+                    <div class="lg:col-span-1 flex flex-col items-center justify-center text-center">
+                        <div class="w-14 h-14 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-400 text-slate-950 font-black text-2xl flex items-center justify-center shadow-lg shadow-cyan-500/30 my-2">
+                            +
+                        </div>
+                    </div>
+
+                    <!-- Right: Analytics Stack -->
+                    <div class="lg:col-span-5 glass-panel p-8 rounded-3xl border border-white/10 space-y-6 hover:border-emerald-500/30 transition-all">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-code"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white">Analytics Tech Stack</h4>
+                                <p class="text-xs text-slate-400">Technical Solutioning Capabilities</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-3 pt-2">
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-mono font-semibold text-slate-300 hover:text-emerald-400 hover:border-emerald-500/50 transition-all">
+                                SQL
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-mono font-semibold text-slate-300 hover:text-emerald-400 hover:border-emerald-500/50 transition-all">
+                                Python
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-mono font-semibold text-slate-300 hover:text-emerald-400 hover:border-emerald-500/50 transition-all">
+                                Power BI
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-mono font-semibold text-slate-300 hover:text-emerald-400 hover:border-emerald-500/50 transition-all">
+                                Excel
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-mono font-semibold text-slate-300 hover:text-emerald-400 hover:border-emerald-500/50 transition-all">
+                                Tableau
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-mono font-semibold text-slate-300 hover:text-emerald-400 hover:border-emerald-500/50 transition-all">
+                                Data Viz
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-mono font-semibold text-slate-300 hover:text-emerald-400 hover:border-emerald-500/50 transition-all">
+                                KPI Analysis
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-mono font-semibold text-slate-300 hover:text-emerald-400 hover:border-emerald-500/50 transition-all">
+                                Trend Analysis
+                            </div>
+                            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-center text-xs font-mono font-semibold text-slate-300 hover:text-emerald-400 hover:border-emerald-500/50 transition-all">
+                                Insights
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Equation Banner -->
+                <div class="mt-12 glass-panel p-6 rounded-2xl border border-cyan-500/30 text-center max-w-4xl mx-auto shadow-2xl">
+                    <p class="text-lg sm:text-2xl font-bold tracking-tight text-white">
+                        <span class="text-cyan-400">REAL BUSINESS EXPERIENCE</span> + <span class="text-emerald-400">DATA ANALYTICS</span>
+                    </p>
+                    <div class="my-2 text-xl font-bold text-slate-400">=</div>
+                    <p class="text-xl sm:text-3xl font-extrabold gradient-text tracking-wide">
+                        BUSINESS-READY ANALYTICS
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 4: THE ADVANTAGE -->
+        <section id="advantage" class="py-24 relative bg-slate-950/60 border-t border-b border-slate-800/80">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <h2 class="text-xs font-mono uppercase tracking-widest text-cyan-400">Unique Selling Proposition</h2>
+                    <h3 class="text-3xl sm:text-5xl font-extrabold text-white">My Competitive Advantage</h3>
+                    <p class="text-cyan-300 text-lg font-semibold italic">
+                        "I don't just analyze data. I've worked with the business behind the data."
+                    </p>
+                    <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+                        Coming from real-world Pharma and Genetic Diagnostics sales gives me a practical understanding of how commercial teams work, how KPIs are used, where business problems originate, and what kind of insights can actually support decision-making.
+                    </p>
+                </div>
+
+                <!-- 4 Core Advantage Interactive Cards -->
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                    
+                    <!-- Card 01 -->
+                    <div class="glass-panel p-6 rounded-2xl border border-white/10 glass-panel-hover flex flex-col justify-between">
+                        <div>
+                            <div class="text-3xl font-extrabold font-mono text-cyan-400/40 mb-2">01</div>
+                            <h4 class="text-lg font-bold text-white mb-2">Real Business Context</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                I understand the real commercial business questions behind sales figures and customer behaviors.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Card 02 -->
+                    <div class="glass-panel p-6 rounded-2xl border border-white/10 glass-panel-hover flex flex-col justify-between">
+                        <div>
+                            <div class="text-3xl font-extrabold font-mono text-emerald-400/40 mb-2">02</div>
+                            <h4 class="text-lg font-bold text-white mb-2">KPI Understanding</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                Experience working with territory performance, sales trends, customer engagement, and commercial reporting.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Card 03 -->
+                    <div class="glass-panel p-6 rounded-2xl border border-white/10 glass-panel-hover flex flex-col justify-between">
+                        <div>
+                            <div class="text-3xl font-extrabold font-mono text-blue-400/40 mb-2">03</div>
+                            <h4 class="text-lg font-bold text-white mb-2">Problem → Solution</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                Ability to seamlessly connect analytical findings with practical, field-executable business decisions.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Card 04 -->
+                    <div class="glass-panel p-6 rounded-2xl border border-white/10 glass-panel-hover flex flex-col justify-between">
+                        <div>
+                            <div class="text-3xl font-extrabold font-mono text-purple-400/40 mb-2">04</div>
+                            <h4 class="text-lg font-bold text-white mb-2">Healthcare Domain</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                Hands-on exposure to Pharma, Specialty Diagnostics, Genetic Testing, and healthcare stakeholders.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Animated Process Flow Line -->
+                <div class="glass-panel p-8 rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden">
+                    <h4 class="text-center font-mono text-xs text-slate-400 uppercase tracking-widest mb-8">Value Delivery Process Flow</h4>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 relative z-10 text-center">
+                        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+                            <i class="fa-solid fa-circle-question text-cyan-400 text-xl mb-2"></i>
+                            <div class="text-xs font-bold text-white">Business Problem</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+                            <i class="fa-solid fa-database text-emerald-400 text-xl mb-2"></i>
+                            <div class="text-xs font-bold text-white">Data Extraction</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+                            <i class="fa-solid fa-chart-pie text-blue-400 text-xl mb-2"></i>
+                            <div class="text-xs font-bold text-white">Analysis</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+                            <i class="fa-solid fa-lightbulb text-amber-400 text-xl mb-2"></i>
+                            <div class="text-xs font-bold text-white">Insight Generation</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 col-span-2 md:col-span-1">
+                            <i class="fa-solid fa-rocket text-purple-400 text-xl mb-2"></i>
+                            <div class="text-xs font-bold text-white">Commercial Action</div>
+                        </div>
+                    </div>
+
+                    <!-- Flowline -->
+                    <div class="h-1.5 w-full flow-line mt-6 rounded-full"></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 5: CORE COMPETENCIES -->
+        <section id="skills" class="py-24 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <h2 class="text-xs font-mono uppercase tracking-widest text-emerald-400">Technical & Domain Stack</h2>
+                    <h3 class="text-3xl sm:text-5xl font-extrabold text-white">Core Competencies</h3>
+                    <p class="text-slate-400 text-base">Comprehensive skill set acquired through field execution and analytics training.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    
+                    <!-- Group 1: Analytics & Technical -->
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-laptop-code"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Analytics & Technical Skills</h4>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <!-- Skill Card: SQL -->
+                            <div class="tilt-card glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center font-bold text-lg">
+                                    <i class="fa-solid fa-database"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-bold text-white">SQL</h5>
+                                    <p class="text-xs text-slate-400">Querying & Data Manipulation</p>
+                                </div>
+                            </div>
+
+                            <!-- Skill Card: Python -->
+                            <div class="tilt-card glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-lg">
+                                    <i class="fa-brands fa-python"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-bold text-white">Python</h5>
+                                    <p class="text-xs text-slate-400">Pandas, Matplotlib, Seaborn</p>
+                                </div>
+                            </div>
+
+                            <!-- Skill Card: Power BI -->
+                            <div class="tilt-card glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-yellow-500/10 text-yellow-400 flex items-center justify-center font-bold text-lg">
+                                    <i class="fa-solid fa-chart-column"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-bold text-white">Power BI</h5>
+                                    <p class="text-xs text-slate-400">Interactive Dashboards & DAX</p>
+                                </div>
+                            </div>
+
+                            <!-- Skill Card: MS Excel -->
+                            <div class="tilt-card glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-lg">
+                                    <i class="fa-solid fa-file-excel"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-bold text-white">MS Excel</h5>
+                                    <p class="text-xs text-slate-400">Advanced Formulas & Pivot</p>
+                                </div>
+                            </div>
+
+                            <!-- Skill Card: Tableau -->
+                            <div class="tilt-card glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-lg">
+                                    <i class="fa-solid fa-chart-pie"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-bold text-white">Tableau</h5>
+                                    <p class="text-xs text-slate-400">Data Visualization</p>
+                                </div>
+                            </div>
+
+                            <!-- Skill Card: Data Visualization -->
+                            <div class="tilt-card glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold text-lg">
+                                    <i class="fa-solid fa-eye"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-bold text-white">Data Storytelling</h5>
+                                    <p class="text-xs text-slate-400">Executive Reporting</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Group 2: Domain & Business -->
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">Domain & Business Expertise</h4>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <!-- Skill Card 1 -->
+                            <div class="tilt-card glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center font-bold text-lg">
+                                    <i class="fa-solid fa-pills"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-bold text-white">Pharma Sales Analytics</h5>
+                                    <p class="text-xs text-slate-400">Commercial Metrics</p>
+                                </div>
+                            </div>
+
+                            <!-- Skill Card 2 -->
+                            <div class="tilt-card glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-lg">
+                                    <i class="fa-solid fa-vial-virus"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-bold text-white">Diagnostics Data</h5>
+                                    <p class="text-xs text-slate-400">Genetic & Specialty Labs</p>
+                                </div>
+                            </div>
+
+                            <!-- Skill Card 3 -->
+                            <div class="tilt-card glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-lg">
+                                    <i class="fa-solid fa-users-gear"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-bold text-white">CRM & Pipeline</h5>
+                                    <p class="text-xs text-slate-400">Funnel & Lead Tracking</p>
+                                </div>
+                            </div>
+
+                            <!-- Skill Card 4 -->
+                            <div class="tilt-card glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold text-lg">
+                                    <i class="fa-solid fa-route"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-bold text-white">Territory Analysis</h5>
+                                    <p class="text-xs text-slate-400">Regional Performance</p>
+                                </div>
+                            </div>
+
+                            <!-- Skill Card 5 -->
+                            <div class="tilt-card glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center font-bold text-lg">
+                                    <i class="fa-solid fa-magnifying-glass-chart"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-bold text-white">Market Research</h5>
+                                    <p class="text-xs text-slate-400">Clinician Segmentation</p>
+                                </div>
+                            </div>
+
+                            <!-- Skill Card 6 -->
+                            <div class="tilt-card glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center font-bold text-lg">
+                                    <i class="fa-solid fa-square-poll-vertical"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-bold text-white">KPI Dashboards</h5>
+                                    <p class="text-xs text-slate-400">Monthly Strategic Tracking</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 6 & 7: PROJECTS & DASHBOARD VISUALIZATION -->
+        <section id="projects" class="py-24 relative bg-slate-950/60 border-t border-b border-slate-800/80">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-12 space-y-4">
+                    <h2 class="text-xs font-mono uppercase tracking-widest text-cyan-400">Featured Analytics Showcase</h2>
+                    <h3 class="text-3xl sm:text-5xl font-extrabold text-white">Diagnostic Sales Data Analysis</h3>
+                    <p class="text-slate-400 text-base">
+                        Analyzed two years of regional diagnostics sales data using Python, Pandas, Matplotlib, and Seaborn.
+                    </p>
+                    <div class="inline-block px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-mono border border-cyan-500/30">
+                        Interactive Demo Visualization
+                    </div>
+                </div>
+
+                <!-- Interactive Dashboard Panel -->
+                <div class="glass-panel rounded-3xl border border-white/10 p-6 sm:p-8 shadow-2xl space-y-8">
+                    
+                    <!-- Dashboard Header & Controls -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+                        <div>
+                            <h4 class="text-xl font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-chart-line text-cyan-400"></i> Executive Diagnostics Performance Dashboard
+                            </h4>
+                            <p class="text-xs text-slate-400 font-mono mt-1">Simulated Dataset Analysis | 24-Month Retrospective Study</p>
+                        </div>
+                        
+                        <!-- Filter Controls -->
+                        <div class="flex items-center gap-2 bg-slate-900 p-1.5 rounded-xl border border-slate-800 font-mono text-xs">
+                            <button id="btn-all" onclick="updateDashboardFilter('all')" class="px-3 py-1.5 rounded-lg bg-cyan-500 text-slate-950 font-bold transition-all">All Regions</button>
+                            <button id="btn-mh" onclick="updateDashboardFilter('mh')" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all">Western MH</button>
+                            <button id="btn-pune" onclick="updateDashboardFilter('pune')" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all">Pune Metro</button>
+                        </div>
+                    </div>
+
+                    <!-- Top Row: Floating KPI Cards -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+                            <span class="text-xs text-slate-400 block font-mono">Total Sales Vol.</span>
+                            <span class="text-xl sm:text-2xl font-bold text-white font-mono" id="kpi-vol">₹ 2.45 Cr</span>
+                            <span class="text-xs text-emerald-400 block mt-1"><i class="fa-solid fa-arrow-trend-up"></i> +14.2% YoY</span>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+                            <span class="text-xs text-slate-400 block font-mono">Active Clinicians</span>
+                            <span class="text-xl sm:text-2xl font-bold text-white font-mono" id="kpi-clinicians">142</span>
+                            <span class="text-xs text-emerald-400 block mt-1"><i class="fa-solid fa-circle-check"></i> High Engagement</span>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+                            <span class="text-xs text-slate-400 block font-mono">Top Category</span>
+                            <span class="text-xl sm:text-2xl font-bold text-white font-mono" id="kpi-top-category">Prenatal</span>
+                            <span class="text-xs text-cyan-400 block mt-1"><i class="fa-solid fa-dna"></i> Genetics Lead</span>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+                            <span class="text-xs text-slate-400 block font-mono">Territory Coverage</span>
+                            <span class="text-xl sm:text-2xl font-bold text-white font-mono" id="kpi-coverage">94%</span>
+                            <span class="text-xs text-emerald-400 block mt-1"><i class="fa-solid fa-chart-pie"></i> Optimal Reach</span>
+                        </div>
+                    </div>
+
+                    <!-- Charts Grid -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        
+                        <!-- Chart 1: Monthly Sales Trend (Line) -->
+                        <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-col justify-between">
+                            <div class="flex items-center justify-between mb-4">
+                                <h5 class="text-sm font-bold text-white">Monthly Sales Trend (2-Year Window)</h5>
+                                <span class="text-xs text-slate-500 font-mono">INR Lacs</span>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="chart-sales-trend"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Chart 2: Product Performance Breakdown (Bar) -->
+                        <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-col justify-between">
+                            <div class="flex items-center justify-between mb-4">
+                                <h5 class="text-sm font-bold text-white">Product Category Contribution</h5>
+                                <span class="text-xs text-slate-500 font-mono">% Share</span>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="chart-product-share"></canvas>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-wrap items-center justify-between gap-4 border-t border-slate-800 pt-6">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span class="text-xs text-slate-400">Project Completed | Diagnostic Analytics</span>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <button class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 transition-all border border-slate-700">
+                                <i class="fa-solid fa-file-pdf mr-1 text-red-400"></i> View Analysis
+                            </button>
+                            <button class="px-4 py-2 rounded-xl bg-slate-800 text-xs font-semibold text-slate-500 cursor-not-allowed border border-slate-800" title="Repository link disabled for demo">
+                                <i class="fa-brands fa-github mr-1"></i> GitHub Repository
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 8 & 9: EDUCATION & CERTIFICATIONS -->
+        <section id="education" class="py-24 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="grid lg:grid-cols-12 gap-12">
+                    
+                    <!-- Left: Education -->
+                    <div class="lg:col-span-5 space-y-8">
+                        <div class="space-y-3">
+                            <h2 class="text-xs font-mono uppercase tracking-widest text-cyan-400">Academic Background</h2>
+                            <h3 class="text-3xl font-extrabold text-white">Education</h3>
+                        </div>
+
+                        <div class="glass-panel p-8 rounded-3xl border border-white/10 glass-panel-hover relative overflow-hidden">
+                            <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl mb-6">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+
+                            <div class="space-y-2">
+                                <span class="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-mono font-semibold">2019</span>
+                                <h4 class="text-2xl font-bold text-white pt-2">Bachelor of Pharmacy (B.Pharm)</h4>
+                                <p class="text-sm text-cyan-300 font-medium">KBC North Maharashtra University, Jalgaon</p>
+                                <p class="text-slate-400 text-sm pt-3 leading-relaxed">
+                                    Solid foundational knowledge in pharmacology, clinical science, drug formulations, healthcare ethics, and pharmaceutical business principles.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Certifications Wall -->
+                    <div class="lg:col-span-7 space-y-8">
+                        <div class="space-y-3">
+                            <h2 class="text-xs font-mono uppercase tracking-widest text-emerald-400">Continuous Upskilling</h2>
+                            <h3 class="text-3xl font-extrabold text-white">Certifications & Training</h3>
+                        </div>
+
+                        <div class="space-y-4">
+                            
+                            <!-- Cert 1 -->
+                            <div class="glass-panel p-5 rounded-2xl border border-white/10 flex items-center justify-between gap-4 glass-panel-hover">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-lg">
+                                        <i class="fa-solid fa-certificate"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-base font-bold text-white">Master's in Data Analytics</h5>
+                                        <p class="text-xs text-slate-400">TopMentor</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-mono px-3 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">Analytics</span>
+                            </div>
+
+                            <!-- Cert 2 -->
+                            <div class="glass-panel p-5 rounded-2xl border border-white/10 flex items-center justify-between gap-4 glass-panel-hover">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-lg">
+                                        <i class="fa-solid fa-chart-simple"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-base font-bold text-white">Master's in Business Analytics</h5>
+                                        <p class="text-xs text-slate-400">TopMentor</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-mono px-3 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">Commercial</span>
+                            </div>
+
+                            <!-- Cert 3 -->
+                            <div class="glass-panel p-5 rounded-2xl border border-white/10 flex items-center justify-between gap-4 glass-panel-hover">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold text-lg">
+                                        <i class="fa-solid fa-heart-pulse"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-base font-bold text-white">Digital Health Specialization</h5>
+                                        <p class="text-xs text-slate-400">Imperial College London | Coursera</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-mono px-3 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">Healthcare</span>
+                            </div>
+
+                            <!-- Cert 4 -->
+                            <div class="glass-panel p-5 rounded-2xl border border-white/10 flex items-center justify-between gap-4 glass-panel-hover">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-lg">
+                                        <i class="fa-solid fa-code"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-base font-bold text-white">Python & SQL Fundamentals</h5>
+                                        <p class="text-xs text-slate-400">TopMentor</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-mono px-3 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">Technical</span>
+                            </div>
+
+                            <!-- Cert 5 -->
+                            <div class="glass-panel p-5 rounded-2xl border border-white/10 flex items-center justify-between gap-4 glass-panel-hover">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center font-bold text-lg">
+                                        <i class="fa-solid fa-robot"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-base font-bold text-white">AI in Pharma: Transforming Life Sciences</h5>
+                                        <p class="text-xs text-slate-400">Life Sciences Sector Skill Development Council (LSSSDC)</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-mono px-3 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">AI / Life Sciences</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 10: RELOCATION & RECRUITER SPOTLIGHT -->
+        <section class="py-24 relative bg-slate-950/60 border-t border-b border-slate-800/80">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <h2 class="text-xs font-mono uppercase tracking-widest text-emerald-400">Hiring Fast-Track</h2>
+                    <h3 class="text-3xl sm:text-5xl font-extrabold text-white">Open to New Opportunities</h3>
+                    <p class="text-slate-400 text-base">Candidate availability, relocation preferences, and core value proposition.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-12">
+                    
+                    <!-- Relocation Card -->
+                    <div class="glass-panel p-8 rounded-3xl border border-cyan-500/30 text-center space-y-4 hover:border-cyan-400 transition-all shadow-xl">
+                        <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-3xl mx-auto">
+                            <i class="fa-solid fa-plane-departure"></i>
+                        </div>
+                        <h4 class="text-xs font-mono uppercase text-slate-400 tracking-wider">📍 Ready to Relocate</h4>
+                        <div class="text-4xl font-extrabold text-white">YES</div>
+                        <p class="text-xs text-slate-400">Open to major healthcare & commercial analytics hubs across India.</p>
+                    </div>
+
+                    <!-- Notice Period Card -->
+                    <div class="glass-panel p-8 rounded-3xl border border-emerald-500/30 text-center space-y-4 hover:border-emerald-400 transition-all shadow-xl">
+                        <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-3xl mx-auto">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <h4 class="text-xs font-mono uppercase text-slate-400 tracking-wider">⏱ Available to Join</h4>
+                        <div class="text-4xl font-extrabold text-white">Within 30 Days</div>
+                        <p class="text-xs text-slate-400">Immediate transition capability into analytics roles.</p>
+                    </div>
+
+                </div>
+
+                <!-- Recruiter Value Proposition -->
+                <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-white/10 space-y-8">
+                    <h4 class="text-2xl font-bold text-white text-center">What I Bring to the Table</h4>
+                    
+                    <div class="grid sm:grid-cols-3 gap-6 text-center">
+                        <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800">
+                            <div class="text-cyan-400 font-bold text-lg mb-2">6+ Years</div>
+                            <p class="text-xs text-slate-300">Healthcare & Commercial Field Experience</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800">
+                            <div class="text-emerald-400 font-bold text-lg mb-2">Hands-on Skills</div>
+                            <p class="text-xs text-slate-300">SQL, Python, Power BI, Excel, Tableau</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800">
+                            <div class="text-purple-400 font-bold text-lg mb-2">Dual Perspective</div>
+                            <p class="text-xs text-slate-300">Commercial Context + Technical Data Capabilities</p>
+                        </div>
+                    </div>
+
+                    <p class="text-center text-slate-300 text-sm sm:text-base max-w-2xl mx-auto italic">
+                        "Looking for opportunities where healthcare domain knowledge and analytical thinking can come together to solve real business problems."
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 11: GET IN TOUCH -->
+        <section id="contact" class="py-24 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="grid lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Left Contact Info -->
+                    <div class="lg:col-span-5 space-y-8">
+                        <div class="space-y-4">
+                            <h2 class="text-xs font-mono uppercase tracking-widest text-cyan-400">Let's Connect</h2>
+                            <h3 class="text-3xl sm:text-5xl font-extrabold text-white">Let's Turn Data Into Business Decisions.</h3>
+                            <p class="text-slate-400 text-base leading-relaxed">
+                                Have a healthcare, pharma, diagnostics, or commercial analytics opportunity? I'd love to connect and discuss how my background fits your team.
+                            </p>
+                        </div>
+
+                        <!-- Contact Badges -->
+                        <div class="space-y-4">
+                            <a href="mailto:smilingprafulla@gmail.com" class="glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex items-center gap-4 group">
+                                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xl group-hover:bg-cyan-500 group-hover:text-slate-950 transition-colors">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs text-slate-400 font-mono block">Direct Email</span>
+                                    <span class="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors">smilingprafulla@gmail.com</span>
+                                </div>
+                            </a>
+
+                            <a href="tel:7304475787" class="glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex items-center gap-4 group">
+                                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl group-hover:bg-emerald-500 group-hover:text-slate-950 transition-colors">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs text-slate-400 font-mono block">Phone Number</span>
+                                    <span class="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">+91 7304475787</span>
+                                </div>
+                            </a>
+
+                            <a href="https://linkedin.com/in/prafulla-chaudhari-424240183" target="_blank" rel="noopener noreferrer" class="glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex items-center gap-4 group">
+                                <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-xl group-hover:bg-blue-500 group-hover:text-slate-950 transition-colors">
+                                    <i class="fa-brands fa-linkedin-in"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs text-slate-400 font-mono block">LinkedIn Profile</span>
+                                    <span class="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">linkedin.com/in/prafulla-chaudhari-424240183</span>
+                                </div>
+                            </a>
+
+                            <div class="glass-panel p-4 rounded-2xl border border-white/10 flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs text-slate-400 font-mono block">Current Location</span>
+                                    <span class="text-sm font-bold text-white">Pune, Maharashtra</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Contact Form (Client Side Fallback) -->
+                    <div class="lg:col-span-7">
+                        <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-white/10 shadow-2xl">
+                            <h4 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                                <i class="fa-solid fa-paper-plane text-cyan-400"></i> Send a Message
+                            </h4>
+
+                            <form id="contact-form" action="mailto:smilingprafulla@gmail.com" method="post" enctype="text/plain" class="space-y-5">
+                                <div class="grid sm:grid-cols-2 gap-5">
+                                    <div class="space-y-2">
+                                        <label for="name" class="text-xs font-mono text-slate-300">Your Name *</label>
+                                        <input type="text" id="name" name="Name" required placeholder="e.g. Sarah Jenkins" class="w-full px-4 py-3 rounded-xl glass-input text-white text-sm">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="email" class="text-xs font-mono text-slate-300">Your Email *</label>
+                                        <input type="email" id="email" name="Email" required placeholder="e.g. sarah@pharma.com" class="w-full px-4 py-3 rounded-xl glass-input text-white text-sm">
+                                    </div>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label for="subject" class="text-xs font-mono text-slate-300">Subject</label>
+                                    <input type="text" id="subject" name="Subject" placeholder="Commercial Analytics Opportunity / Inquiry" class="w-full px-4 py-3 rounded-xl glass-input text-white text-sm">
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label for="message" class="text-xs font-mono text-slate-300">Message *</label>
+                                    <textarea id="message" name="Message" rows="4" required placeholder="Hello Prafulla, we reviewed your profile and would like to discuss..." class="w-full px-4 py-3 rounded-xl glass-input text-white text-sm resize-none"></textarea>
+                                </div>
+
+                                <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-400 text-slate-950 font-bold text-sm uppercase tracking-wider hover:shadow-lg hover:shadow-cyan-500/25 transition-all flex items-center justify-center gap-2">
+                                    <span>Send Message via Email</span>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                                
+                                <p class="text-xs text-slate-500 text-center font-mono mt-2">
+                                    * Directly triggers your default mail client to smilingprafulla@gmail.com
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 border-t border-slate-800/80 py-12 text-slate-400 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 to-emerald-400 flex items-center justify-center text-slate-950 font-bold text-sm">
+                    PC
+                </div>
+                <div>
+                    <p class="font-bold text-white">Prafulla Chaudhari</p>
+                    <p class="text-slate-500">Healthcare Data Analyst | Commercial Analytics</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-6 font-mono text-slate-400">
+                <a href="mailto:smilingprafulla@gmail.com" class="hover:text-cyan-400 transition-colors">smilingprafulla@gmail.com</a>
+                <span>•</span>
+                <span>Pune, MH</span>
+                <span>•</span>
+                <a href="https://linkedin.com/in/prafulla-chaudhari-424240183" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition-colors">LinkedIn</a>
+            </div>
+
+            <div class="text-slate-500">
+                © 2026 Prafulla Chaudhari. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* -------------------------------------------------------------
+           1. THREE.JS INTERACTIVE DATA SPHERE & PARTICLE BACKGROUND
+        ------------------------------------------------------------- */
+        function initThreeJS() {
+            const container = document.getElementById('three-canvas-container');
+            if (!container) return;
+
+            // Check WebGL availability fallback
+            try {
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                container.appendChild(renderer.domElement);
+
+                // Create Rotating Data Particles Network
+                const particleCount = 180;
+                const geometry = new THREE.BufferGeometry();
+                const positions = new Float32Array(particleCount * 3);
+                const colors = new Float32Array(particleCount * 3);
+
+                const cyanColor = new THREE.Color(0x06B6D4);
+                const emeraldColor = new THREE.Color(0x10B981);
+
+                for (let i = 0; i < particleCount * 3; i += 3) {
+                    positions[i] = (Math.random() - 0.5) * 15;
+                    positions[i + 1] = (Math.random() - 0.5) * 15;
+                    positions[i + 2] = (Math.random() - 0.5) * 15;
+
+                    const mixedColor = Math.random() > 0.5 ? cyanColor : emeraldColor;
+                    colors[i] = mixedColor.r;
+                    colors[i + 1] = mixedColor.g;
+                    colors[i + 2] = mixedColor.b;
+                }
+
+                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+                const material = new THREE.PointsMaterial({
+                    size: 0.08,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: 0.8
+                });
+
+                const particleSystem = new THREE.Points(geometry, material);
+                scene.add(particleSystem);
+
+                // Add Rotating Central Analytical Sphere Wireframe
+                const sphereGeom = new THREE.IcosahedronGeometry(3, 2);
+                const sphereMat = new THREE.MeshBasicMaterial({
+                    color: 0x06B6D4,
+                    wireframe: true,
+                    transparent: true,
+                    opacity: 0.15
+                });
+                const sphere = new THREE.Mesh(sphereGeom, sphereMat);
+                scene.add(sphere);
+
+                camera.position.z = 8;
+
+                // Mouse interactive parallax
+                let mouseX = 0, mouseY = 0;
+                window.addEventListener('mousemove', (e) => {
+                    mouseX = (e.clientX / window.innerWidth - 0.5) * 0.5;
+                    mouseY = (e.clientY / window.innerHeight - 0.5) * 0.5;
+                });
+
+                // Animation loop
+                function animate() {
+                    requestAnimationFrame(animate);
+
+                    particleSystem.rotation.y += 0.001;
+                    particleSystem.rotation.x += 0.0005;
+
+                    sphere.rotation.y -= 0.002;
+                    sphere.rotation.z += 0.001;
+
+                    camera.position.x += (mouseX - camera.position.x) * 0.05;
+                    camera.position.y += (-mouseY - camera.position.y) * 0.05;
+                    camera.lookAt(scene.position);
+
+                    renderer.render(scene, camera);
+                }
+
+                animate();
+
+                // Responsive Canvas resize
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+
+            } catch (err) {
+                console.warn("WebGL not supported or disabled. Rendering standard css gradient fallback.", err);
+            }
+        }
+
+        /* -------------------------------------------------------------
+           2. CHART.JS INTERACTIVE DEMO DASHBOARD
+        ------------------------------------------------------------- */
+        let chartSalesTrend, chartProductShare;
+
+        const dashboardData = {
+            all: {
+                vol: "₹ 2.45 Cr",
+                clinicians: "142",
+                category: "Prenatal",
+                coverage: "94%",
+                trend: [8.2, 9.5, 11.0, 10.4, 12.8, 14.5, 13.9, 15.6, 17.2, 18.0, 19.4, 21.5],
+                categories: [45, 25, 18, 12]
+            },
+            mh: {
+                vol: "₹ 1.35 Cr",
+                clinicians: "78",
+                category: "Prenatal",
+                coverage: "91%",
+                trend: [4.5, 5.2, 6.1, 5.8, 7.1, 8.0, 7.6, 8.8, 9.5, 10.1, 10.8, 12.0],
+                categories: [40, 30, 18, 12]
+            },
+            pune: {
+                vol: "₹ 1.10 Cr",
+                clinicians: "64",
+                category: "Genetic Rare",
+                coverage: "98%",
+                trend: [3.7, 4.3, 4.9, 4.6, 5.7, 6.5, 6.3, 6.8, 7.7, 7.9, 8.6, 9.5],
+                categories: [52, 20, 18, 10]
+            }
+        };
+
+        function initCharts() {
+            // Chart 1: Sales Trend Line Chart
+            const ctxTrend = document.getElementById('chart-sales-trend')?.getContext('2d');
+            if (ctxTrend) {
+                chartSalesTrend = new Chart(ctxTrend, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [{
+                            label: 'Sales Revenue (Lacs)',
+                            data: dashboardData.all.trend,
+                            borderColor: '#06B6D4',
+                            backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: '#10B981',
+                            pointRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: {
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                ticks: { color: '#94A3B8', font: { family: 'JetBrains Mono', size: 10 } }
+                            },
+                            y: {
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                ticks: { color: '#94A3B8', font: { family: 'JetBrains Mono', size: 10 } }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Chart 2: Product Share Doughnut Chart
+            const ctxShare = document.getElementById('chart-product-share')?.getContext('2d');
+            if (ctxShare) {
+                chartProductShare = new Chart(ctxShare, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Prenatal Genetics', 'Rare Disease', 'Specialty Lab', 'General Health'],
+                        datasets: [{
+                            data: dashboardData.all.categories,
+                            backgroundColor: ['#06B6D4', '#10B981', '#3B82F6', '#8B5CF6'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                                labels: { color: '#CBD5E1', font: { family: 'Plus Jakarta Sans', size: 11 } }
+                            }
+                        },
+                        cutout: '70%'
+                    }
+                });
+            }
+        }
+
+        function updateDashboardFilter(region) {
+            const data = dashboardData[region];
+            if (!data) return;
+
+            // Update KPI Text
+            document.getElementById('kpi-vol').innerText = data.vol;
+            document.getElementById('kpi-clinicians').innerText = data.clinicians;
+            document.getElementById('kpi-top-category').innerText = data.category;
+            document.getElementById('kpi-coverage').innerText = data.coverage;
+
+            // Update Charts
+            if (chartSalesTrend) {
+                chartSalesTrend.data.datasets[0].data = data.trend;
+                chartSalesTrend.update();
+            }
+
+            if (chartProductShare) {
+                chartProductShare.data.datasets[0].data = data.categories;
+                chartProductShare.update();
+            }
+
+            // Button active styles
+            ['all', 'mh', 'pune'].forEach(r => {
+                const btn = document.getElementById(`btn-${r}`);
+                if (btn) {
+                    if (r === region) {
+                        btn.className = "px-3 py-1.5 rounded-lg bg-cyan-500 text-slate-950 font-bold transition-all";
+                    } else {
+                        btn.className = "px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all";
+                    }
+                }
+            });
+        }
+
+        /* -------------------------------------------------------------
+           3. UI NAVIGATION & INTERACTIVITY
+        ------------------------------------------------------------- */
+        document.addEventListener('DOMContentLoaded', () => {
+            initThreeJS();
+            initCharts();
+
+            // Initialize VanillaTilt for Skill Cards
+            if (typeof VanillaTilt !== 'undefined') {
+                VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
+                    max: 15,
+                    speed: 400,
+                    glare: true,
+                    "max-glare": 0.2
+                });
+            }
+
+            // Mobile Menu Toggle
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+
+            if (mobileBtn && mobileMenu) {
+                mobileBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    mobileMenu.classList.toggle('flex');
+                    if (menuIcon) {
+                        menuIcon.classList.toggle('fa-bars');
+                        menuIcon.classList.toggle('fa-xmark');
+                    }
+                });
+
+                document.querySelectorAll('.mobile-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('flex');
+                        if (menuIcon) {
+                            menuIcon.classList.add('fa-bars');
+                            menuIcon.classList.remove('fa-xmark');
+                        }
+                    });
+                });
+            }
+
+            // GSAP Animations on Scroll
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+
+                gsap.utils.toArray('.glass-panel').forEach((panel) => {
+                    gsap.from(panel, {
+                        opacity: 0,
+                        y: 30,
+                        duration: 0.8,
+                        scrollTrigger: {
+                            trigger: panel,
+                            start: "top 85%",
+                            toggleActions: "play none none reverse"
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
